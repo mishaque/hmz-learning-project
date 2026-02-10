@@ -45,7 +45,7 @@ This project is an interactive AI chat agent that can answer general questions a
 Start the Streamlit app:
 
 ```bash
-streamlit run news_agent/agent.py web
+streamlit run price_agent/agent.py web
 ```
 
 - The app will open in your browser (usually at [http://localhost:8501](http://localhost:8501)).
@@ -56,7 +56,7 @@ streamlit run news_agent/agent.py web
 You can also run the agent in the terminal:
 
 ```bash
-python news_agent/agent.py
+python price_agent/agent.py
 ```
 
 Type your questions and see responses in the console.
@@ -74,7 +74,7 @@ Type your questions and see responses in the console.
 
 ## File Structure
 
-- `news_agent/agent.py` — Main agent code (web and CLI).
+- `price_agent/agent.py` — Main agent code (web and CLI).
 - `requirements.txt` — Python dependencies.
 - `.env` — Your OpenAI API key (not included in version control).
 
