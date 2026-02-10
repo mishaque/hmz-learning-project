@@ -1,2 +1,11 @@
-google-adk
+python-dotenv
+streamlit
+
+# LangChain LTS family (pin together)
+langchain==1.2.9
+langchain-core==1.2.9
+langchain-openai==1.1.8
+langgraph==1.0.8
+
+# optional (only if you actually use it)
 litellm
