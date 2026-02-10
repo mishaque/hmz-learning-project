@@ -72,6 +72,83 @@ Type your questions and see responses in the console.
 
 ---
 
+## How LangChain Works in `agent.py`
+
+The core logic of this project is built using [LangChain](https://python.langchain.com/), which provides abstractions for LLMs, tools, and agent orchestration. Here’s how it works in `price_agent/agent.py`:
+
+- **LLM Setup:**  
+  The agent uses OpenAI's GPT-4o model via the `ChatOpenAI` wrapper from LangChain.
+
+- **Tool Definition:**  
+  The `@tool` decorator from LangChain is used to define `price_finder_tool`, which simulates fetching product prices from multiple stores.
+
+- **Agent Creation:**  
+  The agent is created using `create_agent`, which combines the LLM, the list of tools, and a system prompt. The system prompt instructs the agent to use the price finder tool when appropriate.
+
+- **Conversation Handling:**  
+  - In the web UI (Streamlit), user messages and AI responses are stored in a chat history.
+  - Each time the user sends a message, the full chat history is passed to the agent.
+  - The agent decides, based on the user's input and the system prompt, whether to answer directly or invoke the price finder tool.
+  - If the tool is invoked, its output is included in the AI's response.
+
+- **Streaming and Display:**  
+  - The Streamlit interface displays the conversation interactively.
+  - The command-line interface works similarly, printing messages to the console.
+
+**Summary:**  
+LangChain enables the agent to combine LLM reasoning with tool use, so the AI can both chat naturally and call external functions (like price lookup) when needed—all orchestrated in a single, unified workflow.
+
+---
+
+## Using Azure OpenAI Instead of OpenAI
+
+If you want to use [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) instead of OpenAI, follow these steps:
+
+1. **Install the Azure OpenAI LangChain integration:**
+
+   ```bash
+   pip install langchain-azure-openai
+   ```
+
+2. **Update the import and LLM setup in `price_agent/agent.py`:**
+
+   Replace:
+   ```python
+   from langchain_openai import ChatOpenAI
+   ```
+
+   With:
+   ```python
+   from langchain_azure_openai import AzureChatOpenAI
+   ```
+
+   And update the LLM initialization:
+   ```python
+   llm = AzureChatOpenAI(
+       openai_api_version="2023-05-15",  # or your Azure OpenAI API version
+       azure_deployment="your-deployment-name",
+       azure_endpoint="https://your-resource-name.openai.azure.com/",
+       api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+       temperature=0,
+   )
+   ```
+
+3. **Set your Azure OpenAI credentials in `.env`:**
+
+   ```
+   AZURE_OPENAI_API_KEY=your_azure_openai_api_key
+   ```
+
+   Optionally, you can also set `AZURE_OPENAI_ENDPOINT` and `AZURE_OPENAI_DEPLOYMENT` as environment variables and reference them in your code.
+
+4. **Restart your app.**
+
+**Note:**  
+- The rest of the code and usage remains the same.
+- Make sure your Azure deployment and model names match your Azure OpenAI setup.
+
+---
+
 ## File Structure
 
 - `price_agent/agent.py` — Main agent code (web and CLI).
