@@ -104,13 +104,7 @@ LangChain enables the agent to combine LLM reasoning with tool use, so the AI ca
 
 If you want to use [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/ai-services/openai/overview) instead of OpenAI, follow these steps:
 
-1. **Install the Azure OpenAI LangChain integration:**
-
-   ```bash
-   pip install langchain-azure-openai
-   ```
-
-2. **Update the import and LLM setup in `price_agent/agent.py`:**
+1. **Update the import and LLM setup in `price_agent/agent.py`:**
 
    Replace:
    ```python
@@ -124,24 +118,26 @@ If you want to use [Azure OpenAI Service](https://learn.microsoft.com/en-us/azur
 
    And update the LLM initialization:
    ```python
-   llm = AzureChatOpenAI(
-       openai_api_version="2023-05-15",  # or your Azure OpenAI API version
-       azure_deployment="your-deployment-name",
-       azure_endpoint="https://your-resource-name.openai.azure.com/",
-       api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-       temperature=0,
-   )
+    llm = AzureChatOpenAI(
+        azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
+        api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-02-15-preview"),
+        temperature=0,
+    )
    ```
 
-3. **Set your Azure OpenAI credentials in `.env`:**
+2. **Set your Azure OpenAI credentials in `.env`:**
 
    ```
-   AZURE_OPENAI_API_KEY=your_azure_openai_api_key
+    AZURE_OPENAI_API_KEY=your_azure_openai_api_key
+    AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com/
+    AZURE_OPENAI_DEPLOYMENT=your-deployment-name
+    AZURE_OPENAI_API_VERSION=2024-02-15-preview
+
    ```
 
    Optionally, you can also set `AZURE_OPENAI_ENDPOINT` and `AZURE_OPENAI_DEPLOYMENT` as environment variables and reference them in your code.
 
-4. **Restart your app.**
+3. **Restart your app.**
 
 **Note:**  
 - The rest of the code and usage remains the same.
