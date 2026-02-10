@@ -119,7 +119,7 @@ If you want to use [Azure OpenAI Service](https://learn.microsoft.com/en-us/azur
 
    With:
    ```python
-   from langchain_azure_openai import AzureChatOpenAI
+   from langchain_openai import AzureChatOpenAI
    ```
 
    And update the LLM initialization:
